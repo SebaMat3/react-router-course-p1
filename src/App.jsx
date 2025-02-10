@@ -14,12 +14,12 @@ function App() {
         <Menu />
 
         <Routes>
-
           <Route path="/" element={<HomePage />} /> 
-          <Route path="/blog" element={<BlogPage />} /> 
-          {/* Dynamic route for blog posts - ':slug' is the dynamic parameter */}
-          <Route path="/blog/:slug" element={<BlogPost />} /> {/*  'slug' will be accessible in BlogPost */}
 
+          <Route path='/blog' element={<BlogPage />}>
+            <Route path=':slug' element={<BlogPost />} /> {/* ✅  Relative path ':slug' */}
+          </Route>
+          
           <Route path="/profile" element={<ProfilePage />} /> {/* Render ProfilePage when path is '/profile' */}
         </Routes>
       </HashRouter>
