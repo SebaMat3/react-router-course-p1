@@ -1,36 +1,28 @@
 //import React from 'react';
 import { NavLink } from 'react-router-dom'; // 👈 Import NavLink
 
+const routes = []; // Define routes array
+routes.push({ to: '/', text: 'Home' });
+routes.push({ to: '/blog', text: 'Blog' });
+routes.push({ to: '/profile', text: 'Profile' });
 
 function Menu() {
   return (
     <nav>
       <ul>
-        <li>
-{/*       <NavLink
-            to="/"
-            className={() => ''} // Example: Dynamic class (can be a function)
-            style={() => ({ background: '#fff' })} // Example: Dynamic style (can be a function)
-          >
-            Home
-          </NavLink> */}
-          <NavLink
-            to="/"
-            end // 👈  Important:  Match path exactly
-            style={({ isActive }) => ({ // Style function receiving isActive
-              color: isActive ? 'green' : 'red', // Green if active, red if not
-              fontWeight: isActive ? 'bold' : 'normal', // Bold if active
-            })}
-          >
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/blog">Blog</NavLink>
-        </li>
-        <li>
-          <NavLink to="/profile">Profile</NavLink>
-        </li>
+        {routes.map(route => ( // Map over routes array
+          <li key={route.to}> {/* Add a key for React list rendering */}
+            <NavLink
+              to={route.to}
+              end // Use 'end' prop for exact matching
+              style={({ isActive }) => ({
+                color: isActive ? 'green' : 'red',
+              })}
+            >
+              {route.text}
+            </NavLink>
+          </li>
+        ))}
       </ul>
     </nav>
   );
