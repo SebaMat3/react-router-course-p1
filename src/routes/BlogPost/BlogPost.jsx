@@ -15,7 +15,7 @@ function BlogPost() {
     const blogpost = blogdata.find(post => post.slug === slug);
 
     if (!blogpost) {
-        return <p>Blog post not found 😞</p>; // Basic error handling
+        return <p>Blog post not found 😞</p>; 
     }
 
   return (
