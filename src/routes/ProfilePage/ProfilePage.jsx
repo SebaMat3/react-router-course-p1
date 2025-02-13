@@ -1,16 +1,12 @@
-import { useAuth } from './../../auth/auth'; // 👈 Import useAuth
+import { useAuth } from './../../auth/auth'; 
 
 function ProfilePage() {
-  const auth = useAuth(); // 👈 Use useAuth hook
+  const auth = useAuth();
 
   return (
     <>
-      <h2>Profile 👤</h2>
-      {auth.user ? ( // ✅ Conditionally render greeting if user is logged in
-        <h2>Welcome, {auth.user.username}!</h2>
-      ) : (
-        <p>Please log in to view your profile.</p> // Or handle unauthenticated state
-      )}
+      <h2>Profile 👤</h2>    
+			<h2>Welcome {auth.user.username}</h2>
     </>
   );
 }

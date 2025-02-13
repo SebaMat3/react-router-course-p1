@@ -1,7 +1,8 @@
 //src/auth/auth.jsx
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirects
+import { useNavigate, Navigate } from 'react-router-dom'; // Add Navigate component import
+
 
 const AuthContext = React.createContext(); // Create a context for authentication
 
@@ -37,7 +38,18 @@ function useAuth() {
   return React.useContext(AuthContext); // Custom hook to consume auth context
 }
 
+// 
+function AuthRoute(props) {   
+	const auth = useAuth();   
+	if (!auth.user) {     
+		return <Navigate to="/login" />   
+	}   
+	
+	return props.children;
+} 
+
 export {
   AuthProvider,
   useAuth,
+  AuthRoute,
 };

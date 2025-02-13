@@ -8,7 +8,7 @@ import { HomePage } from './routes/HomePage/HomePage';
 import { BlogPage } from './routes/BlogPage/BlogPage';
 import { Menu } from './components/Menu/Menu';
 import { BlogPost } from './routes/BlogPost/BlogPost';
-import { AuthProvider } from './auth/auth'; // Make sure AuthProvider is imported
+import { AuthProvider, AuthRoute } from './auth/auth'; // Make sure AuthProvider is imported
 
 
 function App() {
@@ -23,8 +23,22 @@ function App() {
               <Route path=":slug" element={<BlogPost />} />
             </Route>
             <Route path='/login' element={<LoginPage />} />
-            <Route path='/logout' element={<LogoutPage />} />
-            <Route path='/profile' element={<ProfilePage />} /> {/* Profile route */}
+            {/* Protected paths */}
+            <Route 
+              path='/logout' 
+              element={
+                <AuthRoute>       
+                  <LogoutPage />     
+                </AuthRoute>   
+              } 
+              />
+            <Route 
+              path='/profile' 
+              element={
+                <AuthRoute>
+                  <ProfilePage/>
+                </AuthRoute>
+              } /> 
             <Route path='/*' element={<p>Page Not Found</p>} />
           </Routes>
         </AuthProvider>
