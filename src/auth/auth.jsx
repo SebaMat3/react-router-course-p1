@@ -3,6 +3,7 @@
 import React from 'react';
 import { useNavigate, Navigate } from 'react-router-dom'; // Add Navigate component import
 
+const adminList = ['Irisval','RetaxMaster', 'freddier'];
 
 const AuthContext = React.createContext(); // Create a context for authentication
 
@@ -11,16 +12,18 @@ function AuthProvider({ children }) {
   const navigate = useNavigate(); // Hook to enable programmatic navigation
 
   const login = ({ username }) => {
-    setUser({ username }); // Set user in state upon login
-    navigate('/profile'); // Redirect to profile page after login
+    //Check if the logging-in user is in the adminList
+    const isAdmin = adminList.find(admin => admin === username);
+    // Set user object with username and isAdmin property
+    setUser({ username, isAdmin }); // 👈  Adding isAdmin property to user object
+    navigate('/profile'); 
   };
 
   const logout = () => {
-    setUser(null);    // Clear user state on logout
-    navigate('/');      // Redirect to homepage after logout
+    setUser(null); 
+    navigate('/'); 
   };
 
-  // Authentication context value to be provided
   const auth = {
     user,
     login,
@@ -28,17 +31,16 @@ function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={auth}> {/* Provide auth context to children */}
+    <AuthContext.Provider value={auth}> 
       {children}
     </AuthContext.Provider>
   );
 }
 
 function useAuth() {
-  return React.useContext(AuthContext); // Custom hook to consume auth context
+  return React.useContext(AuthContext); 
 }
 
-// 
 function AuthRoute(props) {   
 	const auth = useAuth();   
 	if (!auth.user) {     
