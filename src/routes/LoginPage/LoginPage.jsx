@@ -1,7 +1,7 @@
 //src/routes/LoginPage/LoginPage.jsx
 
 import React from 'react';
-import { useAuth } from './../../auth/auth'; // Import useAuth hook
+import { useAuth } from '../../hooks/useAuth'; // Import useAuth hook
 import { Navigate } from 'react-router-dom';
 
 function LoginPage() {

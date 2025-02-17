@@ -1,7 +1,7 @@
 //src/components/Menu/Menu.jsx
 
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../../auth/auth';
+import { useAuth } from '../../hooks/useAuth';
 
 const routes = []; 
 routes.push({ to: '/', text: 'Home', private: false });

@@ -1,6 +1,6 @@
 //src/routes/LogoutPage/LogoutPage.jsx
 
-import { useAuth } from './../../auth/auth'; // Import useAuth hook
+import { useAuth } from '../../hooks/useAuth'; // Import useAuth hook
 
 function LogoutPage() {
   const auth = useAuth(); // Use the useAuth hook to access auth context
