@@ -21,7 +21,7 @@ function BlogPost() {
   }
 
   // Logic to check if the user can delete the blogpost
-  const canDelete = auth.user?.isAdmin || blogpost.author === auth.user?.username; // 👈 New canDelete logic
+  const canDelete = auth.user?.role.permissions.delete || blogpost.author === auth.user?.name; // 👈 New canDelete logic
   
   return (
     <>

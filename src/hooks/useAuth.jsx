@@ -7,10 +7,11 @@ import { fetchUserByUsername } from './auth/users'; // Simulate fetching user fr
 //import { getRoles } from './auth/roles'; // Future: Fetch roles from database
 
 
-const AuthContext = React.createContext(null); // Create a context for authentication
+const AuthContext = React.createContext(); // Create a context for authentication
 
 function AuthProvider({ children }) {
   const [user, setUser] = React.useState(null); // State to hold user info (null if not logged in)
+
   const navigate = useNavigate(); // Hook to enable programmatic navigation
 /* 
   const roles = {
