@@ -9,6 +9,8 @@ routes.push({ to: '/blog', text: 'Blog', private: false });
 routes.push({ to: '/profile', text: 'Profile', private: true });
 routes.push({ to: '/login', text: 'Login', private: false, publicOnly:true });  
 routes.push({ to: '/logout', text: 'Logout', private: true }); 
+routes.push({ to: '/beta', text: 'Beta Features', private: true, beta: true }); // New beta route
+routes.push({ to: '/premium', text: 'Premium Content', private: true, premium: true }); // New premium route
 
 function Menu() {
   const auth = useAuth();
@@ -19,7 +21,9 @@ function Menu() {
         {routes.map(route => {
           if (route.publicOnly && auth.user) return null;
           if (route.private && !auth.user) return null;
-
+          if (route.beta && !auth.user?.role.permissions.beta_access) return null; // Check beta access
+          if (route.premium && !auth.user?.role.permissions.premium_access) return null; // Check premium access
+          
           return (
             <li key={route.to}> 
               <NavLink

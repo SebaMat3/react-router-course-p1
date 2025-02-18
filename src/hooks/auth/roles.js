@@ -13,6 +13,10 @@ export const roles = {
             read: true,
             write: true,
             delete: true,
+            publish: true, // Added publish permission
+            moderate: true, // Added moderate permission
+            beta_access: true, // Access to beta features
+            premium_access: true, // Access to premium features
         },
     },
     editor: {
@@ -23,19 +27,69 @@ export const roles = {
             read: true,
             write: true,
             delete: false,
+            publish: true, // Added publish permission
+            moderate: false,
+            beta_access: false,
+            premium_access: false,
+        },
+    },
+    author: { // Added Author role
+        role_id: 3,
+        type: 'author',
+        description: 'Author role with content creation access',
+        permissions: {
+            read: true,
+            write: true,
+            delete: false, // Authors cannot delete
+            publish: true, // Authors cannot publish directly, maybe submit for review
+            moderate: false,
+            beta_access: false,
+            premium_access: false,
         },
     },
     student: {
-        role_id: 3,
+        role_id: 4,
         type: 'student',
         description: 'Student role with read-only access',
         permissions: {
             read: true,
             write: false,
             delete: false,
+            publish: false,
+            moderate: false,
+            beta_access: false,
+            premium_access: false,
         },
     },
-    // Future: Add more roles as needed (e.g., 'moderator', 'premium_user')
+    beta_tester: { // New Beta Tester role
+        role_id: 5,
+        type: 'beta_tester',
+        description: 'Beta tester role with access to new features',
+        permissions: {
+            read: true,
+            write: true, // Can provide feedback and create content in beta areas
+            delete: false, // To prevent accidental data loss in beta
+            publish: false,
+            moderate: false,
+            beta_access: true, // Key permission: access to beta features
+            premium_access: false,
+        },
+    },
+    premium_user: { // New Premium User role
+        role_id: 6,
+        type: 'premium_user',
+        description: 'Premium user role with access to premium content and features',
+        permissions: {
+            read: true, // Access to basic content
+            write: true, // Typically premium users are consumers, adjust as needed
+            delete: false,
+            publish: true,
+            moderate: false,
+            beta_access: false,
+            premium_access: true, // Key permission: access to premium features
+        },
+    },
+    // Future: Add more roles as needed (e.g., 'moderator', 'support')
 };
 
 // Future: Function to fetch roles from database

@@ -41,6 +41,21 @@ export const users = [
         name: 'sebaMate',
         role: roles.student,
     },
+    {
+        user_id: 8,
+        name: 'betaTester', // New beta tester user
+        role: roles.beta_tester,
+    },
+    {
+        user_id: 9,
+        name: 'premiumUser', // New premium user
+        role: roles.premium_user,
+    },
+    {
+        user_id: 10,
+        name: 'contentAuthor', // New content author user
+        role: roles.author,
+    },
     // Future: Add more users
 ];
 
