@@ -34,12 +34,12 @@ export const users = [
     {
         user_id: 6,
         name: 'juandc',
-        role: roles.student,
+        role: roles.author,
     },
     {
         user_id: 7,
         name: 'sebaMate',
-        role: roles.student,
+        role: roles.author,
     },
     {
         user_id: 8,

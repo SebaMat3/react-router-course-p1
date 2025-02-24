@@ -2,21 +2,29 @@
 
 //import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Outlet } from 'react-router-dom'; // 👈 Import Outlet
-
-import { blogdata } from '../../Data/blogdata'; // Importing our blog post data
+import { Link, useOutletContext, Outlet } from 'react-router-dom'; 
+import { blogdata } from '../../Data/blogdata';
+//import { roles } from '../../hooks/auth/roles';
 
 function BlogPage() {
+  const auth = useOutletContext(); // Access auth from context
+  const canCreate = auth?.user?.role.permissions.create_blogposts;
+  console.log("auth:", auth);
   return (
     <>
-      <h2>Blog Page ✍️</h2>
+      <h2>Blog</h2>
 
-      {/*  <Outlet /> component: Child route components will be rendered here! */}
-      <Outlet /> {/* 👈  This is where BlogPost will render */}
-      
+      {canCreate && (
+        <Link to="create">Create a new blog post</Link> // Link to a new route (not yet implemented)
+      )}
+      <Outlet context={auth} /> {/* Pass auth down to BlogPost */}
       <ul>
         {blogdata.map(post => (
-          <BlogLink key={post.slug} post={post} /> // Using BlogLink component for each post
+          <BlogLink 
+            key={post.slug} 
+            post={post} 
+          /> 
+            
         ))}
       </ul>
     </>

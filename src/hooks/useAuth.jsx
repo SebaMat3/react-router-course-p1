@@ -1,53 +1,16 @@
 //src/hooks/useAuth.jsx
 
-import React from 'react';
-import { useNavigate, Navigate } from 'react-router-dom'; // Add Navigate component import
+import React, { useState, createContext, useContext, useCallback } from 'react';
+//import { roles } from './auth/roles'; // Future: Fetch roles from database
+import { useNavigate, Navigate } from 'react-router-dom'; 
 import { fetchUserByUsername } from './auth/users'; // Simulate fetching user from "database"
 
-//import { getRoles } from './auth/roles'; // Future: Fetch roles from database
 
-
-const AuthContext = React.createContext(); // Create a context for authentication
+const AuthContext = createContext(null); // Create a context for authentication
 
 function AuthProvider({ children }) {
-  const [user, setUser] = React.useState(null); // State to hold user info (null if not logged in)
-
+  const [user, setUser] = useState(null); // State to hold user info (null if not logged in)
   const navigate = useNavigate(); // Hook to enable programmatic navigation
-/* 
-  const roles = {
-    admin: {
-      type: 'admin',
-      permissions: {
-        read: true,
-        write: true,
-        delete: true,
-      },
-    },
-    editor: {
-      type: 'editor',
-      permissions: {
-        read: true,
-        write: true,
-        delete: false, // Editors can't delete
-      },
-    },
-    student: {
-      type: 'student',
-      permissions: {
-        read: true,
-        write: false, // Students can't write
-        delete: false,
-      },
-    },
-  };
-
-  const users = [
-    { name: 'ivana', role: roles.admin },
-    { name: 'fred', role: roles.admin },
-    { name: 'cris', role: roles.admin },
-    { name: 'rocio', role: roles.student },
-    { name: 'leonel', role: roles.editor },
-  ]; */
 
   const login = async ({ username }) => { // Make login async for simulated API calls
     // Simulate fetching user data from a "database" (users.js)
@@ -63,27 +26,31 @@ function AuthProvider({ children }) {
     }
   };
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setUser(null);
     navigate('/');
-  };
+}, [navigate]);
 
-  const auth = {
-    user,
-    login,
-    logout,
-  };
+const authContextValue = {
+  user,
+  login,
+  logout,
+};
 
   return (
-    <AuthContext.Provider value={auth}>
+    <AuthContext.Provider value={authContextValue}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-function useAuth() {
-  return React.useContext(AuthContext);
-}
+const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+      throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
 
 function AuthRoute(props) {
   const auth = useAuth();

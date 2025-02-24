@@ -1,6 +1,7 @@
 //import React from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import 'react-quill-new/dist/quill.snow.css';
+import ReactQuill from 'react-quill-new';
+import DOMPurify from 'dompurify';
 import { setTitle, setContent, startSaving, saveError, saveSuccess } from './blogPostReducer';
 
 function EditBlogUI({ state, dispatch, onSave, onCancel }) {
@@ -9,7 +10,8 @@ function EditBlogUI({ state, dispatch, onSave, onCancel }) {
     };
 
     const handleContentChange = (value) => {
-        dispatch(setContent(value));
+        const sanitizedValue = DOMPurify.sanitize(value); // Sanitize here
+        dispatch(setContent(sanitizedValue));
     };
 
     const handleSubmit = async (e) => {
@@ -17,10 +19,13 @@ function EditBlogUI({ state, dispatch, onSave, onCancel }) {
         dispatch(startSaving()); // Use startSaving action creator
 
         try {
+            console.log('EditBlogUI - handleSubmit - state before onSave:', state); // ADD THIS LINE
             await onSave({ // Pass necessary data to onSave
                 title: state.title,
                 content: state.content,
-                // ... other data from state ...
+                slug: state.slug, // Make sure slug is included here
+                author: state.author, // And author if needed for update
+
             });
             dispatch(saveSuccess()); // Use saveSuccess action creator on success
         } catch (error) {
@@ -36,7 +41,23 @@ function EditBlogUI({ state, dispatch, onSave, onCancel }) {
             <input type="text" id="edit-blog-title" name="title" value={state.title} onChange={handleTitleChange} />
 
             <label>Content:</label>
-            <ReactQuill value={state.content} onChange={handleContentChange} modules={{ /* ... */ }} formats={[/* ... */]} />
+                <ReactQuill 
+                value={state.content} 
+                onChange={handleContentChange} 
+                modules={{ 
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }], // Enable headings
+                        ['bold', 'italic', 'underline'],     // Enable bold, italic, underline
+                        // ... other toolbar options ...
+                    ],
+                }} 
+                formats={[
+                    'header',
+                    'bold', 'italic', 'underline',
+                    // ... other formats ...
+                ]} 
+
+            />
 
             {/* ... other input fields bound to state and dispatch ... */}
 

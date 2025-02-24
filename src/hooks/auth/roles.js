@@ -11,7 +11,8 @@ export const roles = {
         description: 'Administrator role with full access', // Description, TEXT in DB
         permissions: { // Permissions associated with this role
             read: true,
-            write: true,
+            create: true,
+            edit: true,
             delete: true,
             publish: true, // Added publish permission
             moderate: true, // Added moderate permission
@@ -25,7 +26,8 @@ export const roles = {
         description: 'Editor role with content creation and editing access',
         permissions: {
             read: true,
-            write: true,
+            create: true,
+            edit: true,
             delete: false,
             publish: true, // Added publish permission
             moderate: false,
@@ -33,27 +35,29 @@ export const roles = {
             premium_access: false,
         },
     },
-    author: { // Added Author role
+    author: { // Added Author role, granted when logged in.
         role_id: 3,
         type: 'author',
         description: 'Author role with content creation access',
         permissions: {
             read: true,
-            write: true,
+            create: true,
+            edit: false,
             delete: false, // Authors cannot delete
-            publish: true, // Authors cannot publish directly, maybe submit for review
+            publish: true, // Authors shouldn't publish directly, maybe submit for review
             moderate: false,
             beta_access: false,
             premium_access: false,
         },
     },
-    student: {
+    student: { // Guest default
         role_id: 4,
         type: 'student',
         description: 'Student role with read-only access',
         permissions: {
             read: true,
-            write: false,
+            create: false,
+            edit: false,
             delete: false,
             publish: false,
             moderate: false,
@@ -67,7 +71,8 @@ export const roles = {
         description: 'Beta tester role with access to new features',
         permissions: {
             read: true,
-            write: true, // Can provide feedback and create content in beta areas
+            create: true, // Can provide feedback and create content in beta areas
+            edit: false,
             delete: false, // To prevent accidental data loss in beta
             publish: false,
             moderate: false,
@@ -81,7 +86,8 @@ export const roles = {
         description: 'Premium user role with access to premium content and features',
         permissions: {
             read: true, // Access to basic content
-            write: true, // Typically premium users are consumers, adjust as needed
+            create: true, // Typically premium users are consumers, adjust as needed
+            edit: false,
             delete: false,
             publish: true,
             moderate: false,
