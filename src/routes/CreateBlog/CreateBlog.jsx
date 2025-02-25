@@ -1,5 +1,5 @@
     // src/routes/CreateBlog/CreateBlog.jsx
-    import React, { useReducer } from 'react';
+    import { useReducer } from 'react';
     import { useNavigate } from 'react-router-dom';
     import EditBlogUI from '../../features/Blog/components/EditBlog/EditBlogUI'; // Reuse EditBlogUI
     import { blogPostReducer, SET_TITLE, SET_CONTENT, SET_AUTHOR, SET_SLUG } from '../../features/Blog/components/EditBlog/blogPostReducer';

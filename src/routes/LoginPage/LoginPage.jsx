@@ -2,19 +2,23 @@
 
 import React from 'react';
 import { useAuth } from '../../hooks/useAuth'; // Import useAuth hook
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function LoginPage() {
   const [username, setUsername] = React.useState(''); // State for username input
   const auth = useAuth(); // Use the useAuth hook to access auth context
-	
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
+
   const login = (e) => {
     e.preventDefault(); // Prevent default form submission
     auth.login({ username }); // Call the login function from auth context
   };
   
   if(auth.user) {     
-    return <Navigate to="/profile" />  
+    navigate(from, { replace: true });  
   } 
 
   return (

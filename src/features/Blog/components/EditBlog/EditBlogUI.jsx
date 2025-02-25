@@ -1,6 +1,7 @@
 //import React from 'react';
 import 'react-quill-new/dist/quill.snow.css';
 import ReactQuill from 'react-quill-new';
+import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 import { setTitle, setContent, startSaving, saveError, saveSuccess } from './blogPostReducer';
 
@@ -71,5 +72,19 @@ function EditBlogUI({ state, dispatch, onSave, onCancel }) {
         </form>
     );
 }
+
+EditBlogUI.propTypes = {
+    state: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+        author: PropTypes.string.isRequired,
+        slug: PropTypes.string.isRequired,
+        isSaving: PropTypes.bool.isRequired,
+        saveError: PropTypes.object,
+    }).isRequired,
+    dispatch: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
+};
 
 export default EditBlogUI;

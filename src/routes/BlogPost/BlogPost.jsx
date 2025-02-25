@@ -1,6 +1,6 @@
 //src/routes/BlogPost/BlogPost.jsx
 
-import React, {useState} from 'react';
+import {useState} from 'react';
 import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 console.log("Imported blogdata:", blogdata);

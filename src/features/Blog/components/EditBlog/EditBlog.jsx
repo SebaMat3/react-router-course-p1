@@ -1,7 +1,8 @@
 import { useReducer, useCallback } from 'react';
-import EditBlogUI from './EditBlogUI'; // Import UI component
-import { blogPostReducer } from './blogPostReducer'; // Import reducer
-import { blogdata } from '../../../../Data/blogdata'; // Import blogdata to fetch the post
+import PropTypes from 'prop-types';
+import EditBlogUI from './EditBlogUI'; 
+import { blogPostReducer } from './blogPostReducer'; 
+import { blogdata } from '../../../../Data/blogdata'; 
 // import { useBlogApi } from '../../hooks/useBlogApi'; // Example API hook (if you create one)
 
 
@@ -21,13 +22,10 @@ function EditBlog({ blogPost, onSaveSuccess, onCancel }) {
     const [state, dispatch] = useReducer(blogPostReducer, initialState);
     // const blogApi = useBlogApi(); // Example API hook
 
-
-    // Example: useCallback for memoizing save handler
     const handleSave = useCallback(async (updatedBlogPost) => {
         dispatch({ type: 'START_SAVING' });
         try {
             // await blogApi.updateBlogPost(blogPostId, updatedBlogPost); // Example API call
-
             // Simulate API success for now
             await new Promise(resolve => setTimeout(resolve, 1000));
             dispatch({ type: 'SAVE_SUCCESS' });
@@ -44,7 +42,18 @@ function EditBlog({ blogPost, onSaveSuccess, onCancel }) {
         onCancel(); // Callback to parent on cancel
     }, [onCancel]);
 
-
+    EditBlog.propTypes = {
+        blogPost: PropTypes.shape({
+            slug: PropTypes.string.isRequired,
+            title: PropTypes.string,
+            content: PropTypes.string,
+            author: PropTypes.string,
+            isDraft: PropTypes.bool,
+        }).isRequired,
+        onSaveSuccess: PropTypes.func.isRequired,
+        onCancel: PropTypes.func.isRequired,
+    };
+    
     return (
         <EditBlogUI
             state={state}

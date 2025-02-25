@@ -1,5 +1,4 @@
 // src/features/Blog/components/DeleteConfirmationModal/DeleteConfirmationModal.jsx
-import React from 'react';
 import PropTypes from 'prop-types';
 import './DeleteConfirmationModal.css';
 

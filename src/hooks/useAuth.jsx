@@ -1,8 +1,8 @@
 //src/hooks/useAuth.jsx
-
-import React, { useState, createContext, useContext, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { useState, createContext, useContext, useCallback } from 'react';
 //import { roles } from './auth/roles'; // Future: Fetch roles from database
-import { useNavigate, Navigate } from 'react-router-dom'; 
+import { useNavigate, Navigate, useLocation } from 'react-router-dom'; 
 import { fetchUserByUsername } from './auth/users'; // Simulate fetching user from "database"
 
 
@@ -11,6 +11,8 @@ const AuthContext = createContext(null); // Create a context for authentication
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null); // State to hold user info (null if not logged in)
   const navigate = useNavigate(); // Hook to enable programmatic navigation
+  const location = useLocation();
+  const from = location.state?.from || "/";
 
   const login = async ({ username }) => { // Make login async for simulated API calls
     // Simulate fetching user data from a "database" (users.js)
@@ -18,7 +20,8 @@ function AuthProvider({ children }) {
 
     if (userDetails) {
         setUser(userDetails); // Set user with roles from "database"
-        navigate('/profile');
+        navigate(from, { replace: true });
+        //navigate('/profile');
     } else {
         // Handle invalid login (e.g., display error message)
         console.error("Login failed: User not found");
@@ -53,13 +56,21 @@ const useAuth = () => {
 };
 
 function AuthRoute(props) {
+  const location = useLocation();
+
   const auth = useAuth();
   if (!auth.user) {
-    return <Navigate to="/login" />
+    return <Navigate to="/login" state={{ from: location }} replace />
   }
 
   return props.children;
 }
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+AuthRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export {
   AuthProvider,
