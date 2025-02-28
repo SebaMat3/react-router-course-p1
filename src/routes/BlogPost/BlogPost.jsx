@@ -3,6 +3,7 @@
 import {useState} from 'react';
 import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 import DOMPurify from 'dompurify';
+
 console.log("Imported blogdata:", blogdata);
 //import { roles } from './auth/roles'; // Future: Fetch roles from database
 import EditBlog from '../../features/Blog/components/EditBlog/EditBlog';
@@ -31,13 +32,6 @@ function BlogPost() {
 
   const canEdit = auth ? ((auth.user?.name === blogpost.author) || (auth.user?.role?.permissions?.edit ?? false)) : false;
   const canDelete = auth ? ((auth.user?.name === blogpost.author) || (auth.user?.role?.permissions?.delete ?? false)) : false;
-  
-  console.log('auth:', auth); // Log the auth object
-  console.log('blogpost.author:', blogpost.author); // Log the blogpost author
-  console.log('auth.user?.name:', auth.user?.name); // Log the current user's username
-  console.log('auth.user?.role?.permissions?.edit:', auth.user?.role?.permissions?.edit); // Log edit permission
-  console.log('canEdit:', canEdit); // Log the final canEdit value
-  console.log('canDelete:', canDelete); // Log the final canDelete value
   
   const handleDelete = () => {
     setIsDeleteModalOpen(true); // Open the modal when Delete is clicked

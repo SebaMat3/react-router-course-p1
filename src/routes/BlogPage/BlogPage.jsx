@@ -8,8 +8,8 @@ import { blogdata } from '../../Data/blogdata';
 
 function BlogPage() {
   const auth = useOutletContext(); // Access auth from context
-  const canCreate = auth?.user?.role.permissions.create_blogposts;
-  console.log("auth:", auth);
+  const canCreate = auth?.user?.role.permissions.create;
+
   return (
     <>
       <h2>Blog</h2>

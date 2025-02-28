@@ -55,21 +55,26 @@ const useAuth = () => {
   return context;
 };
 
-function AuthRoute(props) {
+function AuthRoute({ children }) { // Corrected AuthRoute - no ...rest, just children
   const location = useLocation();
-
   const auth = useAuth();
+
+  console.log("AuthRoute - auth.user:", auth.user); // ADD THIS LINE
+  
   if (!auth.user) {
-    return <Navigate to="/login" state={{ from: location }} replace />
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return props.children;
+  return children; // Directly return children if authenticated
 }
+
+
+
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 AuthRoute.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node, // Children is now optional as it can wrap Routes directly
 };
 
 export {

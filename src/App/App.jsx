@@ -48,11 +48,8 @@ function App() {
 
               </Route>
               {/* Protected Routes */}
-              <Route path="profile" element={
-                <AuthRoute>
-                  <ProfilePage />
-                </AuthRoute>
-              } />
+              <Route path="profile/:username" element={<AuthRoute><ProfilePage key={window.location.pathname} /></AuthRoute>} />
+
               <Route path="login" element={<LoginPage />} />
               <Route path="logout" element={
                 <AuthRoute>
